@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnOpenModalCoupon2 = document.querySelector('.button-open-Modal2')
   const prices = document.querySelectorAll(".price");
   const thanksmModalContent = document.querySelector(".modal-content");
+
+  const closeCross = document.querySelector(".close-cross");
+
   const getInputNumbersValue = (input) => {
     return input.value.replace(/\D/g, "");
   };
@@ -81,6 +84,11 @@ document.addEventListener("DOMContentLoaded", () => {
     modalWindow.style.top = scrollTop + 'px'
     document.body.style.overflow = 'hidden'
   }
+  function closeModal(){
+    modal.classList.remove("active");
+    modalWindow.classList.remove("active");
+    thanksmModalContent.classList.remove('active')
+  }
   function closeModalCoupon(){
     modalWindowCoupon.classList.remove("active");
     document.body.style.overflow = 'scroll'
@@ -92,11 +100,11 @@ document.addEventListener("DOMContentLoaded", () => {
   btnOpenModalCoupon2.addEventListener("click", () => {
     openModalCoupon()
   });
-
+  closeCross.addEventListener("click", () => {
+    closeModal()
+  })
   closBtn.addEventListener("click", () => {
-    modal.classList.remove("active");
-    modalWindow.classList.remove("active");
-    thanksmModalContent.classList.remove('active')
+    closeModal()
   });
   button.addEventListener("click", () => {
     if (tel.value.length == 0) {
@@ -114,4 +122,14 @@ document.addEventListener("DOMContentLoaded", () => {
   prices.forEach((price) => {
     price.textContent = normalizedPrice(price.textContent);
   });
+  // outclick
+  document.addEventListener( 'click', (e) => {
+      if(modal.classList.contains('active')){
+        console.log(e.target, modal)
+        if (e.target == modalWindow && e.target != btnOpenModalCoupon2 && modal.classList.contains('active')) {
+          closeModalCoupon()
+          closeModal()
+        }
+      }
+  })
 });
